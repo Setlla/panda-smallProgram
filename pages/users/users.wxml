@@ -1,0 +1,15 @@
+<!--pages/users/users.wxml-->
+<view class="content">
+  <button type="default" bindtap=""> 快速扫描快递 </button>
+  <view>
+    <view class="input-item">
+      <input bindinput="bindKeyInput" placeholder="快递单号"/>
+    </view>
+    <view class="input-item">
+      <input bindinput="" placeholder="签收人"/>
+    </view>
+    <view>
+      <button type="primary" bindtap="" > 提交 </button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,22 @@
+<!--pages/sites/sites.wxml-->
+<view class="content">
+  <button type="default" bindtap=""> 快速扫描快递 </button>
+  <view>
+    <view class="input-item">
+      <input bindinput="bindKeyInput" placeholder="快递单号"/>
+    </view>
+    <view class="input-item">
+      <input bindinput="bindKeyInput" placeholder="收件人电话号码"/>
+    </view>
+    <view class="input-item">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{couriesData}}">
+        <view class="picker">
+          快递配送人：{{couriesData[index]}}   
+        </view>
+      </picker>
+    </view>
+    <view>
+      <button type="primary" bindtap="" > 提交 </button>
+    </view>
+  </view>
+</view>
