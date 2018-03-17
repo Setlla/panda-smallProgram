@@ -66,7 +66,12 @@ Page({
       }
     })
   },
-  bindKeyInput: function (e) {
+  setNumber: function (e) {
+    this.setData({
+      number: e.detail.value
+    })
+  },
+  setPhone: function (e) {
     this.setData({
       phone: e.detail.value
     })
@@ -98,6 +103,9 @@ Page({
   },
   getComputerByNum: function(data) {
     var that = this;
+    if (data.detail) {
+      data = data.detail.value;
+    }
     wx.request({
       url: getApp().globalData.baseUrl + 'getComputerByNum', //通过快递单号获取到快递公司等
       method: 'POST',
@@ -108,7 +116,6 @@ Page({
         'content-type': 'application/json' 
       },
       success: function (res) {
-        console.log(res.data)
         that.setData({
           computersData: res.data.result
         })
@@ -135,7 +142,22 @@ Page({
   },
   addExpress: function() {
     var that = this;
-    var formatData = that.formatData(that.data);
+    var data = that.data;
+    if (!data.number || !data.customerInfo.id || !data.computersData[data.computerIndex].ShipperName || !data.userInfo.id || !data.sitesData[data.siteIndex].id) {
+      wx.showModal({
+        title: '说明',
+        content: '请将快递信息补充完整！',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      return;
+    }
+    var formatData = that.formatData(data);
 
     wx.request({
       url: getApp().globalData.baseUrl + 'addExpress', //仅为示例，并非真实的接口地址
@@ -146,27 +168,45 @@ Page({
       },
       success: function (res) {
         if (res.data.isSuccess) {
-          wx.showToast({
+          wx.showModal({
             title: '成功',
-            icon: 'success',
-            duration: 2000
-          });
+            content: '该快递录入成功！',
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
         }else {
-          wx.showToast({
-            title: '该快递已扫描',
-            icon: 'info',
-            duration: 2000
-          });
+          wx.showModal({
+            title: '提示',
+            content: '该快递已扫描！',
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
         }    
-        wx.startPullDownRefresh();
+        that.clearData()
       },
       fail: function () {
-        wx.showToast({
+        wx.showModal({
           title: '失败',
-          icon: 'fail',
-          duration: 2000
+          content: '该快递扫描失败，请重新录入！',
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
         })
-        wx.startPullDownRefresh();
+        that.clearData()
       }
     })
   },
@@ -179,5 +219,21 @@ Page({
       siteID: data.sitesData[data.siteIndex].id,
       state: "集散中心接收快递"
     }
+  },
+  clearData: function () {
+    this.setData({
+      number: '',
+      computersData: [],
+      phone: '',
+      customerInfo: {},
+      siteIndex: -1,
+      computerIndex: 0,
+    })
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   }
 })

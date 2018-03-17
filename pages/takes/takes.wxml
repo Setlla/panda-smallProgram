@@ -3,20 +3,20 @@
   <button type="default" bindtap="getExpressCodeInfo"> 快速扫描快递 </button>
   <view>
     <view class="input-item">
-      <text>快递单号：</text><input value='{{number}}' placeholder="快递单号"/>
+      快递单号：<input bindinput="setNumber" bindblur="getComputerByNum"  value='{{number}}' placeholder="快递单号"/>
     </view>
     <view class="input-item">
-      <picker bindchange="bindPickerChange" value="{{computerIndex}}"  range="{{computersData}}">
+      <picker bindchange="bindPickerChange" range-key="ShipperName"  value="{{computerIndex}}"  range="{{computersData}}">
         <view class="picker">
           快递公司：{{computersData[computerIndex].ShipperName}}
         </view>
       </picker>
     </view>
     <view class="input-item">
-      <text>电话号码： </text> <input bindinput="bindKeyInput" bindblur="getCustomer" value="{{phone}}" placeholder="收件人电话号码"/>
+      电话号码： <input bindinput="setPhone" bindblur="getCustomer" value="{{phone}}" placeholder="收件人电话号码"/>
     </view>
     <view class="input-item">
-     <text>收件人：</text> <input value='{{customerInfo.name}}' placeholder="收件人"/>
+     收件人： <input value='{{customerInfo.name}}' placeholder="收件人"/>
     </view>
     <view class="input-item">
       <picker bindchange="bindPickerChange" range-key="name" value="{{siteIndex}}" range="{{sitesData}}">
@@ -26,7 +26,7 @@
       </picker>
     </view>
      <view class="input-item">
-     <text>当前负责人：</text> {{userInfo.name}}
+     当前负责人： {{userInfo.name}}
     </view>
     <view>
       <button type="primary" bindtap="addExpress" > 提交 </button>

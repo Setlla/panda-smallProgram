@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/takes/takes",
-    "pages/addCourier/addCourier",
+    "pages/users/users",
     "pages/sites/sites",
-    "pages/users/users"
+    "pages/addCourier/addCourier"
   ],
   "window": {
     "navigationBarTextStyle": "black",

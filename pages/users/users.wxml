@@ -1,15 +1,15 @@
 <!--pages/users/users.wxml-->
 <view class="content">
-  <button type="default" bindtap=""> 快速扫描快递 </button>
+  <button type="default" bindtap="getExpressCodeInfo"> 快速扫描快递 </button>
   <view>
     <view class="input-item">
-      <input bindinput="bindKeyInput" placeholder="快递单号"/>
+      快递单号：<input bindinput="setNumber" bindblur="getExpressInfo" value='{{number}}' placeholder="快递单号"/>
     </view>
     <view class="input-item">
-      <input bindinput="" placeholder="签收人"/>
+      签收人：<input bindinput="setReceiverName" value="{{receiverName}}" placeholder="签收人"/>
     </view>
     <view>
-      <button type="primary" bindtap="" > 提交 </button>
+      <button type="primary" bindtap="signExpress" > 提交 </button>
     </view>
   </view>
 </view>
