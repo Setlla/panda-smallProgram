@@ -3,13 +3,15 @@
   <button type="default" bindtap="getExpressCodeInfo"> 快速扫描快递 </button>
   <view>
     <view class="input-item">
-      快递单号：<input bindinput="setNumber" bindblur="getExpressInfo" value='{{number}}' placeholder="快递单号"/>
+      <text class='title'>  快递单号：</text><input bindinput="setNumber" bindblur="getExpressInfo" value='{{number}}' placeholder="快递单号"/>
     </view>
     <view class="input-item">
-      电话号码：{{expressInfo.customerMPhone}}
+      <text class='title'>  电话号码：</text>{{expressInfo.customerMPhone}}
     </view>
     <view class="input-item">
-      当前负责人： {{userInfo.name}}
+      <view class="change">
+ <text class='title'> 当前负责人：</text> {{userInfo.name}}
+     </view>
     </view>
     <view>
       <button type="primary" bindtap="updateExpressINSite" > 提交 </button>

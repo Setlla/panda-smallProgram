@@ -36,7 +36,6 @@ App({
           },
           success: function (res) {
             if(res.data.isRegister == true) {
-              that.globalData.userInfo = res.data.result;
               wx.setStorage({
                 key: "user",
                 data: res.data.result,
@@ -90,16 +89,23 @@ App({
             });
             var pages = getCurrentPages();
             if (pages[0].route == "pages/addCourier/addCourier") {
-              wx.switchTab({
-                url: '/pages/takes/takes',
-                success: function (e) {
-                  console.log(e)
-                },
-                fail: function (e) {
-                  console.log(e)
-                },
-                complete: function (e) {
-                  console.log(e)
+              wx.showModal({
+                title: '成功',
+                content: '恭喜您注册成功！',
+                showCancel: false,
+                success: function (res) {
+                  wx.switchTab({
+                    url: '/pages/takes/takes',
+                    success: function (e) {
+                      console.log(e)
+                    },
+                    fail: function (e) {
+                      console.log(e)
+                    },
+                    complete: function (e) {
+                      console.log(e)
+                    }
+                  })
                 }
               })
             }

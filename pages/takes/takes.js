@@ -20,6 +20,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.getSiteData();
+    var globalData = getApp().globalData;
     try {
       var userInfo = wx.getStorageSync('user');
       if (userInfo) {
@@ -28,8 +29,51 @@ Page({
           userInfo: userInfo
         })
       } else {
-        var data = {};
-        getApp().getRegister(data);
+        wx.login({
+          success: res => {
+            // 发送 res.code 到后台换取 openId, sessionKey, unionId
+            wx.request({
+              url: globalData.baseUrl + 'isRegisterCourier', //仅为示例，并非真实的接口地址
+              method: 'POST',
+              header: {
+                'content-type': 'application/json' // 默认值
+              },
+              data: {
+                code: res.code
+              },
+              success: function (res) {
+                if (res.data.isRegister == true) {
+                  that.setData({
+                    userInfo: userInfo
+                  })
+                  wx.setStorage({
+                    key: "user",
+                    data: res.data.result,
+                    success: function (e) {
+                      console.log(e)
+                    },
+                  });
+                } else {
+                  wx.redirectTo({
+                    url: '/pages/addCourier/addCourier',
+                    success: function (e) {
+                      console.log(e)
+                    },
+                    fail: function (e) {
+                      console.log(e)
+                    },
+                    complete: function (e) {
+                      console.log(e)
+                    }
+                  })
+                }
+              },
+              complete: function (res) {
+                console.log(res);
+              }
+            })
+          }
+        })
       }
     } catch (e) {
       // Do something when catch error

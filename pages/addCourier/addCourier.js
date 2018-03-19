@@ -39,7 +39,22 @@ Page({
   },
   addCourier: function () {
     var appInstance = getApp();
-    appInstance.getRegister(this.data);
+    var data = this.data;
+    if (!data.name || !data.phone || !data.siteIndex) {
+      wx.showModal({
+        title: '说明',
+        content: '请将注册信息填写完整！',
+        success: function (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      return;
+    }
+    appInstance.getRegister(data);
   },
   getName: function (e) {
     this.setData({
