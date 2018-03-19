@@ -15,8 +15,11 @@
   padding: 30rpx 0;
   display: flex;
 }
+.input-item input {
+  width: 70%;
+}
 .title {
-  width: 200rpx;
+  width: 30%;
 }
 .change {
   display: block;

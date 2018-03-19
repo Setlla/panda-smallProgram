@@ -5,12 +5,12 @@ Page({
    */
   data: {
     number: '',
-    computersData: [],
+    companyData: [],
     sitesData: [],
     phone: '',
     customerInfo: {},
     siteIndex: -1,
-    computerIndex: 0,
+    companyIndex: -1,
     userInfo: null
   },
 
@@ -20,6 +20,8 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.getSiteData();
+    that.getCompanyData();
+
     var globalData = getApp().globalData;
     try {
       var userInfo = wx.getStorageSync('user');
@@ -82,6 +84,24 @@ Page({
   onPullDownRefresh: function () {
     wx.startPullDownRefresh()
   },
+  getCompanyData: function () {
+    var that = this;
+    wx.request({
+      url: getApp().globalData.baseUrl + 'getCompany', //仅为示例，并非真实的接口地址
+      method: 'POST',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        that.setData({
+          companyData: res.data.result
+        })
+      },
+      complete: function (res) {
+        console.log(res);
+      }
+    })
+  },
   getSiteData: function () {
     var that = this;
     wx.request({
@@ -106,7 +126,7 @@ Page({
         this.setData({
           number: res.result
         })
-        this.getComputerByNum(res.result);
+        this.getCompanyByNum(res.result);
       }
     })
   },
@@ -145,13 +165,13 @@ Page({
       }
     })
   },
-  getComputerByNum: function(data) {
+  getCompanyByNum: function(data) {
     var that = this;
     if (data.detail) {
       data = data.detail.value;
     }
     wx.request({
-      url: getApp().globalData.baseUrl + 'getComputerByNum', //通过快递单号获取到快递公司等
+      url: getApp().globalData.baseUrl + 'getCompanyByNum', //通过快递单号获取到快递公司等
       method: 'POST',
       data: {
         LogisticCode: data
@@ -160,14 +180,25 @@ Page({
         'content-type': 'application/json' 
       },
       success: function (res) {
-        that.setData({
-          computersData: res.data.result
-        })
+        var data = res.data.result[0];
+        if (data) {
+          that.setCompanyIndex(data);
+        }
       },
       complete: function (res) {
         console.log(res);
       }
     })
+  },
+  setCompanyIndex: function (data) {
+    var companyData = this.data.companyData;
+    for (var i = 0; i < companyData.length; i++) {
+      if (companyData[i].name == data.ShipperName) {
+        this.setData({
+          companyIndex: i
+        })
+      }
+    }
   },
   bindPickerChange: function (e) {
     this.setData({
@@ -187,7 +218,7 @@ Page({
   addExpress: function() {
     var that = this;
     var data = that.data;
-    if (!data.number || !data.customerInfo.id || !data.computersData[data.computerIndex].ShipperName || !data.userInfo.id || !data.sitesData[data.siteIndex].id) {
+    if (!data.number || !data.customerInfo.id || !data.companyData[data.companyIndex].name || !data.userInfo.id || !data.sitesData[data.siteIndex].id) {
       wx.showModal({
         title: '说明',
         content: '请将快递信息补充完整！',
@@ -258,7 +289,7 @@ Page({
     return {
       number: data.number,
       customerID: data.customerInfo.id,
-      companyName: data.computersData[data.computerIndex].ShipperName,
+      companyName: data.companyData[data.companyIndex].ShipperName,
       courierID: data.userInfo.id,
       siteID: data.sitesData[data.siteIndex].id,
       state: "集散中心接收快递"
@@ -267,11 +298,11 @@ Page({
   clearData: function () {
     this.setData({
       number: '',
-      computersData: [],
+      companyData: [],
       phone: '',
       customerInfo: {},
       siteIndex: -1,
-      computerIndex: 0,
+      companyIndex: -1,
     })
   },
   /**

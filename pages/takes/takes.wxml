@@ -3,12 +3,13 @@
   <button type="default" bindtap="getExpressCodeInfo"> 快速扫描快递 </button>
   <view>
     <view class="input-item">
-      <text class='title'>快递单号：</text> <input bindinput="setNumber" bindblur="getComputerByNum"  value='{{number}}' placeholder="快递单号"/>
+      <text class='title'>快递单号：</text> <input bindinput="setNumber" bindblur="getCompanyByNum"  value='{{number}}' placeholder="快递单号"/>
     </view>
     <view class="input-item">
-      <picker bindchange="bindPickerChange" range-key="ShipperName"  value="{{computerIndex}}"  range="{{computersData}}">
+      <picker bindchange="bindPickerChange" range-key="name"  value="{{companyIndex}}"  range="{{companyData}}">
         <view class="picker">
-          <text class='title'>快递公司：</text>{{computersData[computerIndex].ShipperName}}
+          <text class='title'>快递公司：</text>
+          {{companyIndex < 0 ? "选择快递公司" : companyData[companyIndex].name}}
         </view>
       </picker>
     </view>
