@@ -14,7 +14,7 @@
         </view>
       </picker>
     </view>
-    <view>
+    <view class='button-item'>
       <button type="primary" bindtap="addCourier" > 注册为快递员 </button>
     </view>
   </view>

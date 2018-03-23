@@ -8,7 +8,7 @@
     <view class="input-item">
       <text class='title'>  签收人：</text><input bindinput="setReceiverName" value="{{receiverName}}" placeholder="签收人"/>
     </view>
-    <view>
+    <view class='button-item'>
       <button type="primary" bindtap="signExpress" > 提交 </button>
     </view>
   </view>

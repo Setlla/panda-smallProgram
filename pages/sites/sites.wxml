@@ -13,7 +13,7 @@
  <text class='title'> 当前负责人：</text> {{userInfo.name}}
      </view>
     </view>
-    <view>
+    <view class='button-item'>
       <button type="primary" bindtap="updateExpressINSite" > 提交 </button>
     </view>
   </view>

@@ -1,7 +1,8 @@
 //app.js
 App({
   globalData: {
-    baseUrl: 'http://120.78.76.172:8000/',
+    baseUrl: 'https://data.yourhome.top/',
+    // baseUrl: 'http://120.78.76.172:8000/',
     // baseUrl: 'http://192.168.0.103/',
   },
   onLaunch: function () {

@@ -6,7 +6,7 @@
       <text class='title'>快递单号：</text> <input bindinput="setNumber" bindblur="getCompanyByNum"  value='{{number}}' placeholder="快递单号"/>
     </view>
     <view class="input-item">
-      <picker bindchange="bindPickerChange" range-key="name"  value="{{companyIndex}}"  range="{{companyData}}">
+      <picker bindchange="bindCompanyChange" range-key="name"  value="{{companyIndex}}"  range="{{companyData}}">
         <view class="picker">
           <text class='title'>快递公司：</text>
           {{companyIndex < 0 ? "选择快递公司" : companyData[companyIndex].name}}
@@ -17,10 +17,10 @@
       <text class='title'>电话号码：</text> <input bindinput="setPhone" bindblur="getCustomer" value="{{phone}}" placeholder="收件人电话号码"/>
     </view>
     <view class="input-item">
-     <text class='title'>收件人：</text> <input value='{{customerInfo.name}}' placeholder="收件人"/>
+     <text class='title'>收件人：</text> <input value='{{customerInfo.name == true ? customerInfo.name : customerName}}' bindinput="setCustomerName" placeholder="收件人"/>
     </view>
     <view class="input-item">
-      <picker bindchange="bindPickerChange" range-key="name" value="{{siteIndex}}" range="{{sitesData}}">
+      <picker bindchange="bindSiteChange" range-key="name" value="{{siteIndex}}" range="{{sitesData}}">
         <view class="picker">
          <text class='title'> 快递所属站点：</text>{{siteIndex < 0 ? "选择站点" : sitesData[siteIndex].name}}
         </view>
@@ -32,7 +32,7 @@
      </view>
    
     </view>
-    <view>
+    <view class='button-item'>
       <button type="primary" bindtap="addExpress" > 提交 </button>
     </view>
   </view>

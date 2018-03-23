@@ -14,6 +14,7 @@
 .input-item {
   padding: 30rpx 0;
   display: flex;
+  border-bottom: solid 1px #ccc;
 }
 .input-item input {
   width: 70%;
@@ -23,4 +24,7 @@
 }
 .change {
   display: block;
+}
+.button-item {
+  margin-top: 30rpx;
 }
